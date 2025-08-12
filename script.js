@@ -5,7 +5,7 @@ const isMobile = window.matchMedia('(max-width: 767px)').matches;
 // variables for list of products
 const container = document.getElementById('products-list')
 let currentPage = 1;
-let productsPerPage = +document.getElementById('products-per-page').querySelector('.active').textContent;
+let productsPerPage = +document.getElementById('products-per-page').querySelector('.dropdown--active').textContent;
 let lastLoadedProductId = 0;
 let maxLoadedProductId = productsPerPage;
 
@@ -29,13 +29,13 @@ function renderProducts(products) {
             elem.classList.add('product');
 
             const img = document.createElement('img');
-            img.classList.add('swiper-image');
+            img.classList.add('product__image');
             img.setAttribute('loading', 'lazy');
             img.setAttribute('alt', product.text);
             img.src = product.image;
 
             const id = document.createElement('p');
-            id.classList.add('product-id');
+            id.classList.add('product__id');
             id.textContent = 'ID: ' + String(product.id).padStart(2, '0');
 
             elem.appendChild(img);
@@ -60,6 +60,7 @@ function createProductsBanner() {
 
     let bannerEl = document.createElement('div')
     bannerEl.id = 'products-banner';
+    bannerEl.classList.add('products__banner')
 
     const bannerText = "You'll look and feel like the champion."
     const link = ""
@@ -74,11 +75,11 @@ function createProductsBanner() {
     bannerEl.style.backgroundPosition = `${bgX} ${bgY}`;
 
     bannerEl.innerHTML = `
-        <div>
+        <div class="products__banner-header">
             <h2>FORMA'SINT.</h2>
-            <p class="banner-text">${bannerText}</p>
+            <p class="banner__text">${bannerText}</p>
         </div>
-        <button class="banner-button">CHECK THIS OUT<img src="images/icons/arrow-small.svg"></button>
+        <button class="banner__button">CHECK THIS OUT<img src="images/icons/arrow-small.svg" class="banner__button-icon"></button>
     `
     bannerPos.parentNode.insertBefore(bannerEl, bannerPos.nextSibling);
 }
@@ -88,7 +89,7 @@ function createProductsBanner() {
 function showExtendedProduct(id, img) {
     toggleExtendedProductVisibility();
 
-    extendedProductContainer.querySelector('.product-id').textContent = 'ID: ' + String(id).padStart(2, '0');
+    extendedProductContainer.querySelector('.product__id').textContent = 'ID: ' + String(id).padStart(2, '0');
     extendedProductContainer.querySelector('img').src = img;
 }
 
@@ -114,15 +115,15 @@ function createFeaturedProducts() {
 
         productContainer.innerHTML = `
             <div class="swiper-image-container">
-                <img src="${product.img}" alt="${product.name}" class="swiper-image" loading="lazy">
-                ${labelData ? `<p class="product-label ${labelData.class}">${labelData.text.toUpperCase()}</p>` : ''}
+                <img src="${product.img}" alt="${product.name}" class="product__image" loading="lazy">
+                ${labelData ? `<p class="product__label ${labelData.class}">${labelData.text.toUpperCase()}</p>` : ''}
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="heart-icon">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#1D1D1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
-            <div class="swiper-text">
-                <h3>${product.name}</h3>
-                <p>${product.price}</p>
+            <div class="swiper__slide-header">
+                <h3 class="swiper__slide-title">${product.name}</h3>
+                <p class="swiper__slide-price">${product.price}</p>
             </div>
         `;
 
@@ -132,13 +133,12 @@ function createFeaturedProducts() {
 
 // event listener for lazy loading of products list
 let isLoading = false;
+const trigger = document.getElementById('scroll-bottom-trigger');
 // isLoading variable created to prevent from multiple products generation
 // 4 hours
 
-window.addEventListener('scroll', async () => {
-    if (isLoading) return;
-
-    if(window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+const observer = new IntersectionObserver(async (entries) => {
+    if (entries[0].isIntersecting && !isLoading) {
         isLoading = true;
 
         recalculateProductsPerView();
@@ -153,7 +153,13 @@ window.addEventListener('scroll', async () => {
 
         isLoading = false;
     }
-})
+}, {
+    root: null,
+    rootMargin: '20px',
+    threshold: 0.1
+});
+
+observer.observe(trigger);
 
 function recalculateProductsPerView() {
     maxLoadedProductId = lastLoadedProductId + productsPerPage;
@@ -179,7 +185,7 @@ createFeaturedProducts();
             behavior: "smooth",
         })
 
-        if (btn.parentElement.parentElement.classList.contains('mobile-header-nav')) burgerMenuBtns[0].click();
+        if (btn.parentElement.parentElement.parentElement.classList.contains('header__menu-mobile--active')) burgerMenuBtns[0].click();
     })
 })
 
@@ -189,16 +195,16 @@ const dropdownOptions = [...document.getElementsByClassName('dropdown-option')];
 
 dropdownOptions.forEach(option => {
     option.addEventListener('click', () => {
-        option.classList.toggle('border-hidden');
-        option.parentElement.classList.toggle('border-hidden');
+        option.classList.toggle('border--hidden');
+        option.parentElement.classList.toggle('border--hidden');
 
         dropdownOptions.forEach(btn => {
             btn.classList.toggle('hidden-display');
         })
 
-        if (!option.classList.contains('active')) {
-            option.parentElement.querySelector('.active').classList.remove('active');
-            option.classList.add('active');
+        if (!option.classList.contains('dropdown--active')) {
+            option.parentElement.querySelector('.dropdown--active').classList.remove('dropdown--active');
+            option.classList.add('dropdown--active');
             productsPerPage = +option.textContent;
 
             dropdownOptions.forEach(btn => {
@@ -215,12 +221,13 @@ dropdownOptions.forEach(option => {
 })
 
 // header
-const burgerMenuBtns = document.querySelectorAll('.burger-menu-button');
+const burgerMenuBtns = document.querySelectorAll('.header__burger');
 
 burgerMenuBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        document.getElementById('menu-mobile').classList.toggle('show-menu-mobile');
+        document.getElementById('menu-mobile').classList.toggle('header__menu-mobile--active');
         overlay.classList.toggle('hidden');
+        document.querySelector('body').classList.toggle('body--no-scroll');
     })
 })
 
@@ -243,7 +250,7 @@ let settings = {
 
 if (isMobile) {
     settings = {
-        slidesPerView: 1.1,
+        slidesPerView: 1.2,
         slidesPerGroup: 1,
         spaceBetween: 16,
     }

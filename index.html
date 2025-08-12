@@ -11,58 +11,58 @@
 </head>
 <!-- html created in 2-3 hours -->
 <body>
-    <div id="overlay" class="hidden"></div>
-    <header>
-        <div class="header-desktop">
-            <a href="" class="logo-link">
-                <p class="header-icon">F</p>
-                <p class="logo-text">FORMA'SINT.</p>
+    <div id="overlay" class="overlay hidden"></div>
+    <header class="header">
+        <div class="header__desktop">
+            <a href="" class="header__logo-link">
+                <p class="header__icon">F</p>
+                <p class="headr__logo-text">FORMA'SINT.</p>
             </a>
-            <nav>
-                <ul>
-                    <li class="header-nav-elem" data-nav-btn="home">HOME</li>
-                    <li class="header-nav-elem" data-nav-btn="featured">FEATURED PRODUCTS</li>
-                    <li class="header-nav-elem" data-nav-btn="products">PRODUCT LISTING</li>
+            <nav class="header__nav">
+                <ul class="header__nav-list">
+                    <li class="header__nav-elem" data-nav-btn="home">HOME</li>
+                    <li class="header__nav-elem" data-nav-btn="featured">FEATURED PRODUCTS</li>
+                    <li class="header__nav-elem" data-nav-btn="products">PRODUCT LISTING</li>
                 </ul>
             </nav>
-            <div>
-                <img src="images/icons/user.svg" alt="" class="user-icon">
-                <p>FRONTEND DEVELOPER</p>
+            <div class="header__user">
+                <img src="images/icons/user.svg" alt="" class="header__user-icon">
+                <p class="header__user-text">FRONTEND DEVELOPER</p>
             </div>
-            <button class="burger-menu-button">
-                <img src="images/icons/burger-menu.svg" alt="">MENU
+            <button class="header__burger">
+                <img src="images/icons/burger-menu.svg" alt="" class="header__burger-button">MENU
             </button>
         </div>
         
-        <div id="menu-mobile">
-            <div class="mobile-header">
-                <a href="" class="logo-link">
-                    <p class="header-icon">F</p>
+        <div id="menu-mobile" class="header__mobile-menu">
+            <div class="header__mobile">
+                <a href="" class="header__logo-link">
+                    <p class="header__icon">F</p>
                 </a>
-                <button class="burger-menu-button">
-                    <img src="images/icons/close.svg" alt="">CLOSE
+                <button class="header__burger header__burger--close">
+                    <img src="images/icons/close.svg" alt="" class="header__burger-button">CLOSE
                 </button>
             </div>
-            <nav class="mobile-header-nav">
-                <ul>
-                    <li class="header-nav-elem" data-nav-btn="home">HOME</li>
-                    <li class="header-nav-elem" data-nav-btn="featured">FEATURED PRODUCTS</li>
-                    <li class="header-nav-elem" data-nav-btn="products">PRODUCT LISTING</li>
+            <nav class="header__mobile-nav">
+                <ul class="header__nav-list">
+                    <li class="header__nav-elem" data-nav-btn="home">HOME</li>
+                    <li class="header__nav-elem" data-nav-btn="featured">FEATURED PRODUCTS</li>
+                    <li class="header__nav-elem" data-nav-btn="products">PRODUCT LISTING</li>
                 </ul>
             </nav>
         </div>
     </header>
-    <section id="banner" data-section="home">
-        <h1 id="banner-logo">Forma'Sint.</h1>
-        <picture>
+    <section class="banner" data-section="home">
+        <h1 class="banner__logo">Forma'Sint.</h1>
+        <picture class="banner__picture">
             <source srcset="images/HERO PHOTO.jpg" type="image/jpg">
-            <img src="images/HERO PHOTO.jpg" alt="banner">
+            <img src="images/HERO PHOTO.jpg" alt="banner" class="banner__image">
         </picture>
     </section>
-    <section id="featured-products" data-section="featured">
-        <div class="featured-products-text">
-            <p>FEATURED PRODUCTS</p>
-            <h2>Browse featured</h2>
+    <section id="featured-products" data-section="featured" class="featured__products">
+        <div class="featured__products-header">
+            <p class="featured__products-text">FEATURED PRODUCTS</p>
+            <h2 class="featured__products-title">Browse featured</h2>
         </div>
         <div class="swiper">
             <div class="swiper-wrapper">
@@ -73,25 +73,26 @@
             <div class="swiper-scrollbar"></div>
         </div>
     </section>
-    <section id="all-products" data-section="products">
-        <div class="dropdown-container">
+    <section id="all-products" data-section="products" class="all__products">
+        <div class="dropdown__container">
             <h2>NUMBER OF PRODUCTS PER PAGE</h2>
-            <div class="dropdown-options-container">
-                <div id="products-per-page" class="border-hidden">
-                    <button class="dropdown-option border-hidden active">14</button>
+            <div class="dropdown__options">
+                <div id="products-per-page" class="dropdown__options-container border--hidden">
+                    <button class="dropdown-option border--hidden dropdown--active">14</button>
                     <button class="dropdown-option hidden-display">25</button>
                     <button class="dropdown-option hidden-display">36</button>
                 </div>
             </div>
         </div>
-        <div id="products-list">
+        <div id="products-list" class="products__list">
         </div>
-        <article id="product-extended" class="hidden">
-            <img src="" alt="">
-            <p class="product-id extended-id"></p>
-            <button id="close-extended"><img src="images/icons/close.svg" alt="">CLOSE</button>
+        <article id="product-extended" class="product__extended hidden">
+            <img src="" alt="" class="product__extended-image">
+            <p class="product__id extended__product-id"></p>
+            <button id="close-extended" class="product__extended-close"><img src="images/icons/close.svg" alt="" class="product__extended-close--icon">CLOSE</button>
         </article>
     </section>
+    <div id="scroll-bottom-trigger"></div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js" type="module"></script>
 </body>

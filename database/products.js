@@ -22,10 +22,10 @@ export const products = [
 export const labelStyles = {
     'bestseller': {
         text: 'bestseller',
-        class: 'label-bestseller'
+        class: 'label--bestseller'
     },
     'limited edition': {
         text: 'limited edition',
-        class: 'label-limited'
+        class: 'label--limited'
     }
 }
